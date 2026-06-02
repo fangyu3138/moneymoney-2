@@ -1,0 +1,8 @@
+請使用 economic-weekly-report skill，產出本週台灣、美國與全球經濟周報。請查詢最新資料，包含 CPI、利率、匯率、股市、油價、出口/製造業相關數據，並輸出 Markdown 與 HTML 檔。
+
+請在報告中：
+1. 標示資料基準日與主要資料來源。
+2. 優先引用官方資料，例如 DGBAS、財政部、經濟部、中央銀行、BLS、Federal Reserve、BEA、ISM、ECB、Eurostat、NBS China。
+3. 將內容分成台灣、美國、全球三大區塊。
+4. 每個區塊整理重點數據、趨勢判讀與下週觀察重點。
+5. 產出一份 Markdown 檔與一份可直接開啟的 HTML 檔。

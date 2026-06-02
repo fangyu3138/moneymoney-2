@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Micro-Finance Expense Optimizer</title>
+    <meta name="description" content="Micro-finance dashboard for hidden daily expenses, compound savings, CSV classification, and dream BOM breakdown.">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <h1 id="page-title">Hidden Expense Micro-Finance Dashboard</h1>
+          <p class="eyebrow">Micro-Finance & Expense Optimizer</p>
+          <p class="intro" data-i18n="intro"></p>
+        </div>
+        <div class="hero-meter" aria-label="monthly extra savings">
+          <span data-i18n="heroLabel"></span>
+          <strong id="heroSavings">NT$2,360</strong>
+        </div>
+      </section>
+
+      <section class="dashboard-grid" aria-label="dashboard">
+        <form class="panel control-panel" id="financeForm">
+          <div class="section-heading">
+            <p>Input Parameters</p>
+            <h2 data-i18n="baseData"></h2>
+          </div>
+
+          <label class="field">
+            <span data-i18n="salary"></span>
+            <input id="salary" type="number" min="0" step="1000" value="52000" inputmode="decimal">
+          </label>
+
+          <div class="two-col">
+            <label class="field">
+              <span data-i18n="essentialExpense"></span>
+              <input id="essentialExpense" type="number" min="0" step="500" value="30000" inputmode="decimal">
+            </label>
+            <label class="field">
+              <span data-i18n="essentialPercent"></span>
+              <input id="essentialPercent" type="number" min="0" max="100" step="1" value="58" inputmode="decimal">
+            </label>
+          </div>
+
+          <div class="section-heading compact">
+            <p>Latte Factors</p>
+            <h2 data-i18n="hiddenItems"></h2>
+          </div>
+
+          <label class="field">
+            <span data-i18n="drinkCost"></span>
+            <input id="dailyDrinkCost" type="number" min="0" step="5" value="80" inputmode="decimal">
+          </label>
+
+          <label class="field">
+            <span data-i18n="drinkFrequency"></span>
+            <input id="drinkFrequency" type="number" min="0" max="21" step="1" value="5" inputmode="decimal">
+          </label>
+
+          <label class="field">
+            <span data-i18n="subscription"></span>
+            <input id="subscriptionCost" type="number" min="0" step="10" value="299" inputmode="decimal">
+          </label>
+
+          <label class="field">
+            <span data-i18n="otherHidden"></span>
+            <input id="otherHiddenCost" type="number" min="0" step="100" value="300" inputmode="decimal">
+          </label>
+
+          <label class="field">
+            <span data-i18n="csvUpload"></span>
+            <input id="csvUpload" type="file" accept=".csv,text/csv">
+          </label>
+
+          <p class="helper" id="csvSummary" data-i18n="csvHelp"></p>
+          <div class="mini-summary" id="csvBreakdown" aria-live="polite"></div>
+
+          <div class="section-heading compact">
+            <p>Scenario Analysis</p>
+            <h2 data-i18n="scenario"></h2>
+          </div>
+
+          <label class="range-field">
+            <span><span data-i18n="cutRatio"></span> <strong id="cutLabel">50%</strong></span>
+            <input id="cutRatio" type="range" min="0" max="100" step="5" value="50">
+          </label>
+
+          <label class="range-field">
+            <span><span data-i18n="annualReturn"></span> <strong id="returnLabel">5%</strong></span>
+            <input id="annualReturn" type="range" min="1" max="10" step="0.5" value="5">
+          </label>
+
+          <label class="range-field">
+            <span><span data-i18n="years"></span> <strong id="yearsLabel">5 years</strong></span>
+            <input id="years" type="range" min="1" max="10" step="1" value="5">
+          </label>
+
+          <div class="pain-card" id="painHint" aria-live="polite"></div>
+        </form>
+
+        <section class="results-stack">
+          <div class="metrics-row">
+            <article class="metric">
+              <span data-i18n="hiddenMonthly"></span>
+              <strong id="hiddenMonthly">NT$4,760</strong>
+            </article>
+            <article class="metric">
+              <span data-i18n="monthlySaved"></span>
+              <strong id="monthlySaved">NT$2,380</strong>
+            </article>
+            <article class="metric accent">
+              <span data-i18n="futureValue"></span>
+              <strong id="futureValue">NT$160,000</strong>
+            </article>
+          </div>
+
+          <section class="panel goal-panel">
+            <div class="section-heading">
+              <p>Goal Selector</p>
+              <h2 data-i18n="goalSelector"></h2>
+            </div>
+            <div class="goal-row">
+              <label class="field goal-field">
+                <span data-i18n="goalPick"></span>
+                <select id="goalSelect"></select>
+              </label>
+              <div class="goal-result" id="goalResult" aria-live="polite"></div>
+            </div>
+          </section>
+
+          <div class="chart-grid">
+            <article class="panel chart-panel">
+              <div class="section-heading">
+                <p>Salary Allocation</p>
+                <h2 data-i18n="allocation"></h2>
+              </div>
+              <div class="pie-fallback" id="allocationChart" aria-label="salary allocation chart"></div>
+            </article>
+
+            <article class="panel chart-panel">
+              <div class="section-heading">
+                <p>Future Value Projection</p>
+                <h2 data-i18n="projection"></h2>
+              </div>
+              <svg id="projectionChart" class="line-chart" viewBox="0 0 720 320" role="img" aria-label="compound projection chart"></svg>
+            </article>
+          </div>
+
+          <section class="panel bom-panel">
+            <div class="section-heading">
+              <p>Dream BOM Breakdown</p>
+              <h2 data-i18n="bom"></h2>
+            </div>
+            <div class="bom-grid" id="bomGrid"></div>
+          </section>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>
